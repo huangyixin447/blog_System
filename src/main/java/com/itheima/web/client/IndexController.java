@@ -23,9 +23,11 @@ import java.util.List;
  * @Description TODO
  * @Date 2019-3-14 9:49
  * @Created by CrazyStone
+ * 博客首页处理类
  */
 @Controller
 public class IndexController {
+//    日志类
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired

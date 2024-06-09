@@ -61,9 +61,12 @@ public class ArticleServiceImpl implements IArticleService {
     // 统计前10的热度文章信息
     @Override
     public List<Article> getHeatArticles( ) {
+//        筛选出点击数量不为0的文章条数
         List<Statistic> list = statisticMapper.getStatistic();
         List<Article> articlelist=new ArrayList<>();
+//        新建集合,用于存放前十的文章
         for (int i = 0; i < list.size(); i++) {
+//            由高到低写入list集合，并且到序号为9时终止循环
             Article article = articleMapper.selectArticleWithId(list.get(i).getArticleId());
             article.setHits(list.get(i).getHits());
             article.setCommentsNum(list.get(i).getCommentsNum());
