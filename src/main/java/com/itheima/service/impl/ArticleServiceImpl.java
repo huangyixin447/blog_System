@@ -52,7 +52,9 @@ public class ArticleServiceImpl implements IArticleService {
             article.setHits(statistic.getHits());
             article.setCommentsNum(statistic.getCommentsNum());
         }
+//        将articleList放入PageInfo中生成分页实体
         PageInfo<Article> pageInfo=new PageInfo<>(articleList);
+
         return pageInfo;
     }
 
