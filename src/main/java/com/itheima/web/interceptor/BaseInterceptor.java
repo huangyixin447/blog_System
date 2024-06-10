@@ -20,15 +20,19 @@ public class BaseInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        在调用controller方法前面
+
         return true;
     }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//        在请求处理后，但是视图还没被转发前
         // 用户将封装的Commons工具返回页面
         request.setAttribute("commons",commons);
     }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+//        完全结束后
     }
 }
 

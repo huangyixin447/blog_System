@@ -75,6 +75,7 @@ public class IndexController {
 
     // 查询文章的评论信息，并补充到文章详情里面
     private void getArticleComments(HttpServletRequest request, Article article) {
+//        需要先判断文章是否允许评论
         if (article.getAllowComment()) {
             // cp表示评论页码，commentPage
             String cp = request.getParameter("cp");

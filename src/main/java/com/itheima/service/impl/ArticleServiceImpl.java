@@ -31,6 +31,7 @@ public class ArticleServiceImpl implements IArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private StatisticMapper statisticMapper;
+    /*注入redis服务*/
     @Autowired
     private RedisTemplate redisTemplate;
     @Autowired
@@ -38,8 +39,7 @@ public class ArticleServiceImpl implements IArticleService {
 
     // 分页查询文章列表
     @Override
-    public PageInfo<Article> selectArticleWithPage(Integer page, Integer count) {
-//        开始分页，指定页码和每页的数量
+    public PageInfo<Article> selectArticleWithPage(Integer page, Integer count) {//        开始分页，指定页码和每页的数量
         PageHelper.startPage(page, count);
 //        从数据库中查询对应的文章列表
         List<Article> articleList = articleMapper.selectArticleWithPage();
@@ -61,10 +61,13 @@ public class ArticleServiceImpl implements IArticleService {
     // 统计前10的热度文章信息
     @Override
     public List<Article> getHeatArticles( ) {
-//        筛选出点击数量不为0的文章条数
+//        筛选出点击数量不为0的文章条数（“SELECT * FROM t_statistic WHERE hits !='0' " +
+//            "ORDER BY hits DESC, comments_num DESC”）
+//        从大到小排序的
         List<Statistic> list = statisticMapper.getStatistic();
         List<Article> articlelist=new ArrayList<>();
 //        新建集合,用于存放前十的文章
+//
         for (int i = 0; i < list.size(); i++) {
 //            由高到低写入list集合，并且到序号为9时终止循环
             Article article = articleMapper.selectArticleWithId(list.get(i).getArticleId());
@@ -80,17 +83,36 @@ public class ArticleServiceImpl implements IArticleService {
 
     // 根据id查询单个文章详情，并使用Redis进行缓存管理
     public Article selectArticleWithId(Integer id){
-        Article article = null;
+//
+//        Article article = null;
+////        先尝试从redis中获取对应id的文章，如果没有则开始使用数据进行查询
+//        Object o = redisTemplate.opsForValue().get("article_" + id);
+//        if(o!=null){
+//            article=(Article)o;
+//        }else{
+//            article = articleMapper.selectArticleWithId(id);
+//            if(article!=null){
+//                redisTemplate.opsForValue().set("article_" + id,article);
+//            }
+//        }
+//        return article;
+        Article article =null;
         Object o = redisTemplate.opsForValue().get("article_" + id);
-        if(o!=null){
-            article=(Article)o;
-        }else{
-            article = articleMapper.selectArticleWithId(id);
-            if(article!=null){
-                redisTemplate.opsForValue().set("article_" + id,article);
+        if (o!=null){
+            article=(Article) o;
+
+        }else {
+            article=articleMapper.selectArticleWithId(id);
+//            不为null,存入redis中
+            if (article !=null){
+                redisTemplate.opsForValue().set("article_" + id, article);
+
             }
+
+
         }
-        return article;
+        return  article;
+
     }
 
     // 发布文章

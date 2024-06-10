@@ -21,6 +21,7 @@ public interface ArticleMapper {
             " allow_comment, thumbnail, content)" +
             " VALUES (#{title},#{created}, #{modified}, #{tags}, #{categories}," +
             " #{allowComment}, #{thumbnail}, #{content})")
+//    指定从article对象中获取数据库主键的相关配置，调用完成后article的主键属性会进行自动赋值
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn="id")
     public Integer publishArticle(Article article);
 
