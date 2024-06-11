@@ -40,6 +40,7 @@ public class SiteServiceImpl implements ISiteService {
 
     @Override
     public List<Comment> recentComments(int limit) {
+//        大于10郑进行分页，小于10则按照limit分成一页
         PageHelper.startPage(1, limit>10 || limit<1 ? 10:limit);
         List<Comment> byPage = commentMapper.selectNewComment();
         return byPage;
