@@ -99,19 +99,17 @@ public class ArticleServiceImpl implements IArticleService {
         Article article =null;
         Object o = redisTemplate.opsForValue().get("article_" + id);
         if (o!=null){
-            article=(Article) o;
+            article=(Article)o;
 
         }else {
+
             article=articleMapper.selectArticleWithId(id);
-//            不为null,存入redis中
-            if (article !=null){
+            if (article!=null) {
                 redisTemplate.opsForValue().set("article_" + id, article);
-
             }
-
-
         }
         return  article;
+
 
     }
 
