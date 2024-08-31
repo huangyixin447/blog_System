@@ -30,6 +30,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+
         RedisTemplate<Object, Object> template = new RedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         // 使用JSON格式序列化对象，对缓存数据key和value进行转换
