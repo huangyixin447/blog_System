@@ -2,6 +2,7 @@ package com.itheima.dao;
 
 import com.itheima.model.domain.Article;
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 /**
  * @Classname ArticleMapper
@@ -28,6 +29,7 @@ public interface ArticleMapper {
     // 文章发分页查询
     @Select("SELECT * FROM t_article ORDER BY id DESC")
     public List<Article> selectArticleWithPage();
+
 
     // 通过id删除文章
     @Delete("DELETE FROM t_article WHERE id=#{id}")

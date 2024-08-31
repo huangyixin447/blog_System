@@ -3,6 +3,7 @@ package com.itheima.dao;
 import com.itheima.model.domain.Article;
 import com.itheima.model.domain.Statistic;
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 /**
  * @Classname StatisticMapper
@@ -27,7 +28,7 @@ public interface StatisticMapper {
     public void updateArticleHitsWithId(Statistic statistic);
 
     // 通过文章id更新评论量
-    @Update("UPDATE t_statistic SET comments_num=#{commentsNum} " +
+    @Update("UPDATE t_statistic SET comments_num=#{com mentsNum} " +
             "WHERE article_id=#{articleId}")
     public void updateArticleCommentsWithId(Statistic statistic);
 

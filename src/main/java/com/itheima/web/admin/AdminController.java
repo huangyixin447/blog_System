@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 /**
@@ -42,6 +43,13 @@ public class AdminController {
         request.setAttribute("comments", comments);
         request.setAttribute("articles", articles);
         request.setAttribute("statistics", staticticsBo);
+//       fixme 抽风了，想写个线程的原因。。
+
+        System.out.println(System.currentTimeMillis());
+        Thread currentThread = Thread.currentThread();
+        System.out.println(currentThread.getName());
+
+
         return "back/index";
     }
 
@@ -83,6 +91,7 @@ public class AdminController {
         request.setAttribute("contents", article);
         request.setAttribute("categories", article.getCategories());
         return "back/article_edit";
+//
     }
 
     // 文章修改处理
